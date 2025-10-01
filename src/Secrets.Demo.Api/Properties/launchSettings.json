@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "VisualStudio:Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/scalar",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "DockerDevelopment",
+        "ASPNETCORE_URLS": "https://+:443;http://+:80",
+        "ASPNETCORE_Kestrel__Certificates__Default__Password": "demopassword",
+        "ASPNETCORE_Kestrel__Certificates__Default__Path": "/home/app/.aspnet/https/Secrets.Demo.Api.pfx"
+      },
+      "sslPort": 5443,
+      "useSSL": true
+    },
+    "Development": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "scalar",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:5443;http://localhost:5080/"
+    }
+  }
+}
