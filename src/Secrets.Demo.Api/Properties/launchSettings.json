@@ -7,7 +7,7 @@
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/scalar",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "DockerDevelopment",
-        "ASPNETCORE_URLS": "https://+:443;http://+:80",
+        "ASPNETCORE_URLS": "https://+:5443;http://+:5080",
         "ASPNETCORE_Kestrel__Certificates__Default__Password": "demopassword",
         "ASPNETCORE_Kestrel__Certificates__Default__Path": "/home/app/.aspnet/https/Secrets.Demo.Api.pfx"
       },

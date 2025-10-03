@@ -1,20 +1,23 @@
+using Microsoft.OpenApi.Models;
+
 using Scalar.AspNetCore;
 
 using Secrets.Demo.Api.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.Configure<SecretsSettings>(builder.Configuration.GetSection("Secrets"));
+var secretsSection = builder.Configuration.GetSection("Secrets");
+var secretSettings = secretsSection.Get<SecretsSettings>();
+builder.Services.Configure<SecretsSettings>(secretsSection);
 builder.Services.AddProblemDetails();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi(options =>
 {
     options.AddDocumentTransformer((document, context, cancellationToken) =>
     {
-        document.Info.Title = "Secrets Demo API";
+        document.Info.Title = secretSettings.ServerName;
         document.Info.Version = "v1";
-        document.Info.Description =
-            "API for encrypting and decrypting secrets using symmetric key encryption.";
-
+        document.Info.Description = secretSettings.ServerDescription + $" Configured private symmetric key is: {secretSettings.SymmetricKey}";
+        document.Servers = [new OpenApiServer { Url = secretSettings.ServerUrl, Description = secretSettings.ServerName }];
         return Task.CompletedTask;
     });
 });
@@ -25,8 +28,9 @@ app.UseStatusCodePages();
 app.MapOpenApi();
 app.MapScalarApiReference(options =>
 {
+    options.Servers = [new ScalarServer(secretSettings.ServerUrl, secretSettings.ServerName)];
     options
-        .WithTitle("Secrets Demo API")
+        .WithTitle(secretSettings.ServerName)
         .WithTheme(ScalarTheme.Kepler)
         .WithDarkModeToggle()
         .WithDefaultOpenAllTags()

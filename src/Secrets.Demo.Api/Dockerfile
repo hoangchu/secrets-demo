@@ -3,8 +3,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 RUN groupadd --gid 1000 appgroup && useradd --uid 1000 --gid 1000 appuser
 USER appuser
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 5080
+EXPOSE 5443
 
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src

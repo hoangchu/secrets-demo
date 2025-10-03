@@ -20,19 +20,19 @@
             </DockerEnvVarImpl>
             <DockerEnvVarImpl>
               <option name="name" value="ASPNETCORE_URLS" />
-              <option name="value" value="https://+:443;http://+:80" />
+              <option name="value" value="https://+:5443;http://+:5080" />
             </DockerEnvVarImpl>
           </list>
         </option>
         <option name="portBindings">
           <list>
             <DockerPortBindingImpl>
-              <option name="containerPort" value="443" />
+              <option name="containerPort" value="5443" />
               <option name="hostIp" value="0.0.0.0" />
               <option name="hostPort" value="5443" />
             </DockerPortBindingImpl>
             <DockerPortBindingImpl>
-              <option name="containerPort" value="80" />
+              <option name="containerPort" value="5080" />
               <option name="hostIp" value="0.0.0.0" />
               <option name="hostPort" value="5080" />
             </DockerPortBindingImpl>
