@@ -1,7 +1,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
-# CREATE non-root user and group
-RUN groupadd --gid 1000 appgroup && useradd --uid 1000 --gid 1000 appuser
-USER appuser
+
+USER $APP_UID
 WORKDIR /app
 EXPOSE 5080
 EXPOSE 5443
@@ -22,4 +21,5 @@ RUN dotnet publish "./Secrets.Demo.Api.csproj" -c Release -o /app/publish /p:Use
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
 ENTRYPOINT ["dotnet", "Secrets.Demo.Api.dll"]

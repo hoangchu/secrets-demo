@@ -2,13 +2,13 @@
   <configuration default="false" name="Rider:Docker" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
     <deployment type="dockerfile">
       <settings>
-        <option name="containerName" value="secrets.demo.api" />
+        <option name="containerName" value="rider_secrets.demo.api" />
         <option name="contextFolderPath" value="." />
         <option name="envVars">
           <list>
             <DockerEnvVarImpl>
               <option name="name" value="ASPNETCORE_ENVIRONMENT" />
-              <option name="value" value="DockerDevelopment" />
+              <option name="value" value="Development" />
             </DockerEnvVarImpl>
             <DockerEnvVarImpl>
               <option name="name" value="ASPNETCORE_Kestrel__Certificates__Default__Password" />
@@ -16,7 +16,7 @@
             </DockerEnvVarImpl>
             <DockerEnvVarImpl>
               <option name="name" value="ASPNETCORE_Kestrel__Certificates__Default__Path" />
-              <option name="value" value="/home/app/.aspnet/https/Secrets.Demo.Api.pfx" />
+              <option name="value" value="/home/app/.aspnet/https/VisualStudioRider.Secrets.Demo.Api.pfx" />
             </DockerEnvVarImpl>
             <DockerEnvVarImpl>
               <option name="name" value="ASPNETCORE_URLS" />

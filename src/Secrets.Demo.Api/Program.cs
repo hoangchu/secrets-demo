@@ -5,8 +5,12 @@ using Scalar.AspNetCore;
 using Secrets.Demo.Api.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseKestrel(options => options.AddServerHeader = false);
+builder.Host.UseDefaultServiceProvider(options => options.ValidateScopes = true);
+
 var secretsSection = builder.Configuration.GetSection("Secrets");
-var secretSettings = secretsSection.Get<SecretsSettings>();
+var secretSettings = secretsSection.Get<SecretsSettings>() ?? throw new InvalidOperationException("Secrets settings not found");
+
 builder.Services.Configure<SecretsSettings>(secretsSection);
 builder.Services.AddProblemDetails();
 builder.Services.AddControllers();
@@ -14,9 +18,9 @@ builder.Services.AddOpenApi(options =>
 {
     options.AddDocumentTransformer((document, context, cancellationToken) =>
     {
-        document.Info.Title = secretSettings.ServerName;
+        document.Info.Title = secretSettings!.ServerName;
         document.Info.Version = "v1";
-        document.Info.Description = secretSettings.ServerDescription + $" Configured private symmetric key is: {secretSettings.SymmetricKey}";
+        document.Info.Description = secretSettings.ServerDescription + $" Configured private symmetric key: {secretSettings.SymmetricKey}";
         document.Servers = [new OpenApiServer { Url = secretSettings.ServerUrl, Description = secretSettings.ServerName }];
         return Task.CompletedTask;
     });
@@ -40,4 +44,4 @@ app.MapScalarApiReference(options =>
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-await app.RunAsync();
+app.Run();

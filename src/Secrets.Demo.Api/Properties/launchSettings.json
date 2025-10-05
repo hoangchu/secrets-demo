@@ -6,10 +6,21 @@
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/scalar",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "DockerDevelopment",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "https://+:5443;http://+:5080"
+      },
+      "sslPort": 5443,
+      "useSSL": true
+    },
+    "RiderVisualStudio:Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/scalar",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_URLS": "https://+:5443;http://+:5080",
         "ASPNETCORE_Kestrel__Certificates__Default__Password": "demopassword",
-        "ASPNETCORE_Kestrel__Certificates__Default__Path": "/home/app/.aspnet/https/Secrets.Demo.Api.pfx"
+        "ASPNETCORE_Kestrel__Certificates__Default__Path": "/home/app/.aspnet/https/VisualStudioRider.Secrets.Demo.Api.pfx"
       },
       "sslPort": 5443,
       "useSSL": true
