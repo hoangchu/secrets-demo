@@ -10,7 +10,7 @@ To make the application fully functional, set a user secret `Secrets:SymmetricKe
 dotnet user-secrets init
 dotnet user-secret set "Secrets:SymmetricKey" "5PsLWDPDxchr1x3HVtJ2RhIKhGbi4iNG"
 ```
-Or, you can set the `Secrets__SymmetricKey` environment variable to the same value. This 256-bit string is used for symmetric encryption by the demo app and can be any randomly generated 256-bit value.
+Alternatively, you can set a `Secrets__SymmetricKey` environment variable to the same value. This 256-bit string is used for symmetric encryption by the demo app and can be any randomly generated 256-bit value.
 
 Using an environment variable is also a common approach when deploying the application to Kubernetes.
 
