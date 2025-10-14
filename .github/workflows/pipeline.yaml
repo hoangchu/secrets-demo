@@ -7,6 +7,7 @@ on:
 
 concurrency:
   # Forcing multiple conccurent runs of this workflow to be serialized
+  # to avoid conflicts when updating the deployment manifest.
   group: ${{ github.workflow }}
 
 env:
@@ -67,7 +68,7 @@ jobs:
         with:
           repository: ${{ env.TARGET_REPO }}
           ref: ${{ env.TARGET_BRANCH }}
-          # ⚠️ WARNING: Requires a PAT with 'repo' scope access to the target repository
+          # NOTE: Requires a PAT with 'repo' scope access to the target repository
           token: ${{ secrets.DEPLOYMENT_REPO_PAT }}
 
       - name: Set Git Identity for commit
@@ -75,18 +76,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Update Deployment YAML Image Tag (using yq)
+      - name: Update Deployment YAML Image Tag
         run: |
-          # Install yq
           sudo snap install yq
-
-          # Get the full image tag from the previous job (e.g., ghcr.io/user/repo:sha)
-          IMAGE_WITH_TAG="${{ needs.build-and-push-docker.outputs.image_with_tag }}"
-          echo "Updating image tag to: $IMAGE_WITH_TAG"
-
-          # 💡 Correction: Directly set the image field to the full tag.
-          # This is cleaner and avoids potential issues with regex/string manipulation.
-          yq e '.spec.template.spec.containers[0].image = "'"$IMAGE_WITH_TAG"'"' -i ${{ env.MANIFEST_PATH }}
+          yq e '.spec.template.spec.containers[0].image = "'"${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"'"' -i ${{ env.MANIFEST_PATH }}
 
       - name: Commit and Push Manifest Changes
         run: |
@@ -94,6 +87,6 @@ jobs:
             echo "No changes detected in deployment manifest. Skipping commit."
           else
             git add ${{ env.MANIFEST_PATH }}
-            git commit -m "🤖 [CI] Bump secrets-demo image to ${{ github.sha }}"
+            git commit -m "[CI] Bump secrets-demo image to ${{ github.sha }}"
             git push
           fi
