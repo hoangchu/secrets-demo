@@ -1,5 +1,7 @@
 # Secrets Demo
-A demo ASP.NET Core API showcasing secrets encryption and decryption with a symmetric key, GitOps-based deployment practices, and debugging a Dockerized web app with HTTPS support in both Visual Studio and JetBrains Rider.
+A demo ASP.NET Core API showcasing secrets encryption and decryption with a symmetric key, GitOps-based deployment workflow (see diagram below), and debugging a Dockerized web app with HTTPS support in both Visual Studio and JetBrains Rider.
+
+![GitOps Deployment Workflow](docs/gitopsflow.png)
 
 ## Getting started
 Clone and open the solution in your favorite IDE: Visual Studio or JetBrains Rider.
@@ -24,6 +26,6 @@ That will install the development certificates in the current user's certificate
 Once that's in place you can debug the application with the launch profile `Rider:Docker`.
 
 ## Visual Studio - HTTPS Debugging in Docker
-Visual Studio integrates well with Docker, so you can debug the application using the `VisualStudio:Docker` launch profile.
+Visual Studio integrates well with Docker, so you can start debugging using the `VisualStudio:Docker` launch profile without any additional steps.
 
-If you use both Visual Studio and Rider (for example, for testing), run `InstallDevCertsWindows.ps1` first. Then, start debugging using the `RiderVisualStudio:Docker` launch profile in Visual Studio, and the `Rider:Docker` launch profile in Rider.
+If you use both Visual Studio and Rider, run `InstallDevCertsWindows.ps1` first. Then, start debugging using the `RiderVisualStudio:Docker` launch profile in Visual Studio, and the `Rider:Docker` launch profile in Rider.
